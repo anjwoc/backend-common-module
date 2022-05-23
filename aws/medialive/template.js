@@ -350,7 +350,7 @@ const input = (channelName, name, type, sources) => {
   }
 };
 
-const initializeInput = (
+const initializeInputs = (
   type,
   channelName,
   streamUrl = "rtmp://1.2.3.4/temp"
@@ -358,10 +358,10 @@ const initializeInput = (
   // Type: UDP_PUSH | RTP_PUSH | RTMP_PUSH | RTMP_PULL | URL_PULL | MP4_FILE
   const items = [];
 
-  const colorbar = {
-    name: `${channelName}-colorbar`,
+  const defaultVideo = {
+    name: `${channelName}-default`,
     type: "MP4_FILE",
-    url: `s3://${config.s3.bucket}/media/common/colorBar1H.mp4`,
+    url: `s3://${config.s3.bucket}/media/common/default.mp4`,
   };
   const dynamicInput = {
     name: `${channelName}-dynamic`,
@@ -387,7 +387,7 @@ const initializeInput = (
       items.push(...[rtmpPush, dynamicInput, rtmpPull]);
       break;
     case "linear":
-      items.push(...[colorbar, rtmpPush, dynamicInput, rtmpPull]);
+      items.push(...[defaultVideo, rtmpPush, dynamicInput, rtmpPull]);
       break;
   }
 
@@ -777,7 +777,7 @@ module.exports = {
   channel,
   RtmpPush,
   HlsS3,
-  initializeInput,
+  initializeInputs,
   input,
   scheduleAction,
   batchUpdateSchedule,
